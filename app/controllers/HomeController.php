@@ -1,10 +1,11 @@
 <?php
-class HomeController
+class HomeController extends Controller
 {
 
   function index()
   {
-    echo 'Home - Index';
+    $tmp = $this->model('Work');
+    echo $tmp->getWork();
   }
 
   function show($id, $a)
