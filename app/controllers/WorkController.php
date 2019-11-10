@@ -11,13 +11,24 @@ class WorkController extends Controller
 
   public function index()
   {
+    $date = isset($_POST['date']) ? $_POST['date'] : '';
+    $arr = explode(' - ', $date);
+
+    if ($date) {
+      $works = $this->works->getWorksByStaringDate(formatToYMD($arr[0]), formatToYMD($arr[1]));
+    } else {
+      $works = $this->works->getWorks();
+    }
+
     $this->view('layouts/master', [
       'page' => 'work/index',
-      'works' => $this->works->getWorks()
+      'works' => $works
     ]);
 
     $this->destroySession();
   }
+
+
 
   public function save()
   {
@@ -79,6 +90,7 @@ class WorkController extends Controller
     }
   }
 
+  // update work status
   public function status($id)
   {
     if ($this->works->updateStatus($id, $_POST['status'])) {
@@ -112,7 +124,7 @@ class WorkController extends Controller
       'status'        => $input['status']
     ];
   }
-
+  
   private function destroySession()
   {
     if (isset($_SESSION['status_create']) || isset($_SESSION['status_update'])) {

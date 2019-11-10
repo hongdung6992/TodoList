@@ -16,6 +16,25 @@ $(document).ready(function () {
   $('.reservation').on('cancel.daterangepicker', function (ev, picker) {
     $(this).val('');
   });
+
+  $(".daterangepicker-field").daterangepicker({
+    showDropdowns: true,
+    autoUpdateInput: false,
+    setDate: '',
+    locale: {
+      format: 'DD/MM/YYYY',
+    }
+  });
+
+  $('.daterangepicker-field').on('apply.daterangepicker', function (ev, picker) {
+    $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+  });
+
+  $('.daterangepicker-field').on('cancel.daterangepicker', function (ev, picker) {
+    $(this).val('');
+  });
+
+ 
 });
 
 // delete work
@@ -33,7 +52,7 @@ $(document).ready(function () {
             $('#modal-confirm-delete').modal('hide');
             reloadData();
             toastr.success(response.message);
-          }else{
+          } else {
             toastr.danger(response.message);
           }
         },
@@ -44,23 +63,23 @@ $(document).ready(function () {
 
   // select update status
   $(document).on('click', ".work-status", function (e) {
-    
+
     let status = $(e.target).data('status');
     let url = $(this).parents('div').data('url');
     $.ajax({
       type: "POST",
       url: url,
-      data: {status},
+      data: { status },
       dataType: "json",
       success: function (response) {
-        if(response.status === 'success'){
+        if (response.status === 'success') {
           reloadData();
         }
       }
     });
   })
 
-  function reloadData(){
+  function reloadData() {
     url = $('#works-table').data('url')
     $.ajax({
       type: "GET",
@@ -71,4 +90,11 @@ $(document).ready(function () {
       }
     });
   }
+})
+
+$(document).ready(function () {
+  $('.btn-close').on('click', function () {
+    $('.form-card').css('display', 'none');
+    $('.list-card').attr('class', 'col-md-12');
+  })
 })

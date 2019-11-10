@@ -7,14 +7,19 @@ class Work extends Database
   // get todo list
   public function getWorks()
   {
-    $sql = "SELECT * FROM works";
+    $sql = "SELECT * FROM works ORDER BY id DESC";
+    return $this->connection->query($sql);
+  }
+
+  public function getWorksByStaringDate($from, $to){
+    $sql = "SELECT * FROM works WHERE staring_date BETWEEN $from AND $to ORDER BY id DESC";
     return $this->connection->query($sql);
   }
 
   // create work
   public function createWork($input)
   {
-    echo $sql = "INSERT INTO " . $this->table . " (name, staring_date, ending_date, status) 
+    $sql = "INSERT INTO " . $this->table . " (name, staring_date, ending_date, status) 
             VALUE (
               '" . $input['name'] . "', 
               " . $input['staring_date'] . ",
@@ -58,21 +63,18 @@ class Work extends Database
   }
 
   // validate form
-  public function validation ($input){
+  public function validation($input)
+  {
 
     $errors = [];
-    if ($_SERVER["REQUEST_METHOD"] === 'POST'){
-      if(empty($input['name'])){
+    if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+      if (empty($input['name'])) {
         $errors['name'] =  'Work name is required';
       }
-      if(empty($input['staring_date'])){
+      if (empty($input['staring_date'])) {
         $errors['staring_date'] =  'Staring date is required';
       }
-      
     }
     return $errors;
   }
-
-  
 }
-
