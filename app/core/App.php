@@ -36,7 +36,7 @@ class App
     if (isset($_GET['url'])) {
       return explode('/', trim($_GET['url'], '/'));
     }else {
-      return ['Home', 'index'];
+      return ['work', 'index'];
     }
   }
 }
