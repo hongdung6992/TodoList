@@ -7,5 +7,5 @@ define('DB_NAME', 'todo_list');
 
 $protocol = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
 define('DS', DIRECTORY_SEPARATOR);
-define('ROOT_URL', $protocol . $_SERVER['HTTP_HOST'] . DS . 'TodoList');
+define('ROOT_URL', $protocol . $_SERVER['HTTP_HOST']);
 
